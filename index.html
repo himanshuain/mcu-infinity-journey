@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>MCU Infinity Journey — Mind Map</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: radial-gradient(ellipse at center, #0a0a12 0%, #050508 100%);
+      min-height: 100vh;
+      color: #e0e0e0;
+      overflow-x: hidden;
+      padding: 20px;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      color: #00d4ff;
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    }
+    .mindmap-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .center-node {
+      width: 180px;
+      height: 180px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border: 3px solid #00d4ff;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40px;
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.3), inset 0 0 30px rgba(0, 212, 255, 0.1);
+      position: relative;
+      z-index: 10;
+    }
+    .center-node span {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #00d4ff;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .center-node .sub {
+      font-size: 0.65rem;
+      color: #8892a0;
+      margin-top: 4px;
+    }
+    .center-node::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(0,212,255,0.5), transparent);
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .artifact-gallery {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
+      margin: 40px 0;
+      padding: 28px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 16px;
+      max-width: 1200px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .artifact-gallery-item {
+      text-align: center;
+    }
+    .artifact-gallery-item img,
+    .artifact-gallery-item .artifact-svg {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.15);
+      margin-bottom: 10px;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .artifact-gallery-item .artifact-svg svg {
+      width: 70px;
+      height: 70px;
+    }
+    .artifact-gallery-item span {
+      font-size: 0.8rem;
+      color: #8892a0;
+      display: block;
+    }
+    .stones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .stone-card {
+      background: linear-gradient(160deg, #1a1a2e 0%, #0f0f1a 100%);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .stone-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    }
+    .stone-card-header {
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .stone-image {
+      width: 88px;
+      height: 88px;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.15);
+      flex-shrink: 0;
+    }
+    .stone-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .stone-icon svg {
+      width: 56px;
+      height: 56px;
+    }
+    .stone-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .stone-alias {
+      font-size: 0.82rem;
+      color: #8892a0;
+      margin-top: 2px;
+    }
+    .stone-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .stone-journey {
+      padding: 18px;
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+    /* Timeline layout for journeys */
+    .stone-timeline {
+      padding: 20px 18px 18px 0;
+      position: relative;
+    }
+    .stone-timeline::before {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, currentColor, transparent);
+      opacity: 0.4;
+      border-radius: 2px;
+    }
+    .timeline-node {
+      position: relative;
+      padding-left: 48px;
+      padding-bottom: 24px;
+    }
+    .timeline-node:last-child { padding-bottom: 0; }
+    .timeline-node::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 3px solid;
+      background: #0f0f1a;
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.5);
+    }
+    .timeline-node.space::before { border-color: #3b82f6; }
+    .timeline-node.mind::before { border-color: #eab308; }
+    .timeline-node.reality::before { border-color: #dc2626; }
+    .timeline-node.power::before { border-color: #9333ea; }
+    .timeline-node.time::before { border-color: #22c55e; }
+    .timeline-node.soul::before { border-color: #f97316; }
+    .timeline-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .timeline-year {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #00d4ff;
+      min-width: 50px;
+    }
+    .timeline-film {
+      font-weight: 600;
+      color: #94a3b8;
+      font-size: 0.82rem;
+    }
+    .timeline-desc {
+      color: #b0b8c4;
+      font-size: 0.86rem;
+      line-height: 1.6;
+    }
+    .char {
+      color: #00d4ff;
+      cursor: help;
+      border-bottom: 1px dashed rgba(0,212,255,0.5);
+      padding: 0 2px;
+      position: relative;
+    }
+    .char:hover {
+      color: #38bdf8;
+      border-bottom-color: #38bdf8;
+    }
+    .char-tooltip {
+      position: fixed;
+      z-index: 10000;
+      background: linear-gradient(160deg, #1e293b 0%, #0f172a 100%);
+      border: 2px solid #00d4ff;
+      border-radius: 12px;
+      padding: 0;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: opacity 0.2s, transform 0.2s;
+      max-width: 200px;
+      overflow: hidden;
+    }
+    .char-tooltip.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .char-tooltip img {
+      width: 180px;
+      height: 220px;
+      min-height: 220px;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px 10px 0 0;
+      background: #1e293b;
+    }
+    .char-tooltip .char-name {
+      padding: 10px 14px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      color: #00d4ff;
+      font-size: 0.95rem;
+    }
+    .timeline-section {
+      margin-top: 50px;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .timeline-section h2 {
+      font-family: 'Orbitron', sans-serif;
+      color: #00d4ff;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .timeline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    .timeline-chip {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #8892a0;
+      transition: all 0.2s;
+    }
+    .timeline-chip:hover {
+      background: rgba(0, 212, 255, 0.2);
+      color: #00d4ff;
+      border-color: #00d4ff;
+    }
+    .timeline-chip .year {
+      color: #00d4ff;
+      font-weight: 600;
+      margin-right: 6px;
+    }
+    .footnote {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.8rem;
+      color: #5a6575;
+    }
+    .footnote a {
+      color: #00d4ff;
+      text-decoration: none;
+    }
+    .footnote a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 768px) {
+      .stones-grid { grid-template-columns: 1fr; }
+      .artifact-gallery { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+      .center-node { width: 140px; height: 140px; }
+    }
+    @media (max-width: 480px) {
+      .artifact-gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <h1>✦ MCU INFINITY JOURNEY — MIND MAP ✦</h1>
+  <div class="mindmap-container">
+    <div class="center-node">
+      <span>MCU INFINITY SAGA</span>
+      <span class="sub">6 Stones · 22 Films</span>
+    </div>
+
+    <!-- Artifact gallery - SVG icons (always visible, no external deps) -->
+    <div class="artifact-gallery">
+      <div class="artifact-gallery-item" title="Space Stone - The Tesseract">
+        <div class="artifact-svg" style="background:linear-gradient(135deg,#1e3a5f,#3b82f6);"><svg viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" fill="none" stroke="#60a5fa" stroke-width="4" transform="rotate(15 50 50)"/><rect x="32" y="32" width="36" height="36" fill="rgba(96,165,250,0.4)" stroke="#93c5fd" stroke-width="2" transform="rotate(15 50 50)"/></svg></div>
+        <span>Tesseract</span>
+      </div>
+      <div class="artifact-gallery-item" title="Mind Stone - Scepter & Vision">
+        <div class="artifact-svg" style="background:linear-gradient(135deg,#422006,#eab308);"><svg viewBox="0 0 100 100"><ellipse cx="50" cy="48" rx="22" ry="28" fill="#facc15" stroke="#fde047" stroke-width="2"/><ellipse cx="50" cy="42" rx="10" ry="12" fill="rgba(255,255,255,0.4)"/><rect x="47" y="72" width="6" height="12" fill="#a16207" rx="1"/></svg></div>
+        <span>Scepter/Vision</span>
+      </div>
+      <div class="artifact-gallery-item" title="Reality Stone - The Aether">
+        <div class="artifact-svg" style="background:linear-gradient(135deg,#5c1a1a,#dc2626);"><svg viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="28" ry="24" fill="#ef4444" opacity="0.9"/><ellipse cx="50" cy="46" rx="18" ry="16" fill="#dc2626" opacity="0.7"/></svg></div>
+        <span>Aether</span>
+      </div>
+      <div class="artifact-gallery-item" title="Power Stone - The Orb">
+        <div class="artifact-svg" style="background:linear-gradient(135deg,#3d1a5c,#9333ea);"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="url(#artifactPowerGrad)"/><circle cx="50" cy="44" r="14" fill="rgba(255,255,255,0.3)"/><defs><linearGradient id="artifactPowerGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#6b21a8"/></linearGradient></defs></svg></div>
+        <span>Orb</span>
+      </div>
+      <div class="artifact-gallery-item" title="Time Stone - Eye of Agamotto">
+        <div class="artifact-svg" style="background:linear-gradient(135deg,#0a3d1a,#22c55e);"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" fill="none" stroke="#4ade80" stroke-width="4"/><ellipse cx="50" cy="50" rx="16" ry="18" fill="#16a34a"/><ellipse cx="50" cy="46" rx="6" ry="8" fill="#86efac"/><path d="M50 28 L50 50 L62 56" stroke="#4ade80" stroke-width="3" fill="none"/></svg></div>
+        <span>Eye of Agamotto</span>
+      </div>
+      <div class="artifact-gallery-item" title="Soul Stone - Vormir">
+        <div class="artifact-svg" style="background:linear-gradient(135deg,#5c3005,#f97316);"><svg viewBox="0 0 100 100"><path d="M50 18 C50 18 26 38 26 54 C26 68 38 78 50 78 C62 78 74 68 74 54 C74 38 50 18 50 18 Z" fill="url(#artifactSoulGrad)"/><ellipse cx="50" cy="52" rx="12" ry="14" fill="rgba(255,255,255,0.2)"/><defs><linearGradient id="artifactSoulGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fb923c"/><stop offset="100%" stop-color="#c2410c"/></linearGradient></defs></svg></div>
+        <span>Vormir Stone</span>
+      </div>
+    </div>
+
+    <div class="stones-grid">
+      <!-- SPACE STONE -->
+      <div class="stone-card">
+        <div class="stone-card-header">
+          <div class="stone-image stone-icon" style="background:linear-gradient(135deg,#1e3a5f,#3b82f6);"><svg viewBox="0 0 72 72" width="60" height="60"><rect x="18" y="18" width="36" height="36" fill="none" stroke="#60a5fa" stroke-width="3" transform="rotate(15 36 36)"/></svg></div>
+          <div>
+            <div class="stone-title">Space Stone</div>
+            <div class="stone-alias">The Tesseract</div>
+          </div>
+          <div class="stone-color" style="background:#3b82f6"></div>
+        </div>
+        <div class="stone-journey stone-timeline" style="color:#3b82f6">
+          <div class="timeline-node space">
+            <div class="timeline-header"><span class="timeline-year">1942</span><span class="timeline-film">Captain America: The First Avenger</span></div>
+            <div class="timeline-desc">Hidden for centuries in a church in <span class="char" data-char="tonsberg">Tønsberg, Norway</span> behind an Asgardian mural. <span class="char" data-char="redskull">Red Skull</span> and <span class="char" data-char="hydra">HYDRA</span> discover it. Scientist <span class="char" data-char="zola">Armin Zola</span> uses it to power weapons. <span class="char" data-char="redskull">Red Skull</span> touches it directly—the Space Stone punishes him, teleporting him to <span class="char" data-char="vormir">Vormir</span>. The Tesseract falls into the <span class="char" data-char="arctic">Arctic Ocean</span>. <span class="char" data-char="howardstark">Howard Stark</span> recovers it; it enters <span class="char" data-char="shield">S.H.I.E.L.D.</span> custody.</div>
+          </div>
+          <div class="timeline-node space">
+            <div class="timeline-header"><span class="timeline-year">1995</span><span class="timeline-film">Captain Marvel</span></div>
+            <div class="timeline-desc">At <span class="char" data-char="pegasus">Project Pegasus</span>, <span class="char" data-char="marvell">Mar-Vell</span> harnesses it for a light-speed engine. <span class="char" data-char="carol">Carol Danvers</span> gains powers from the blast. <span class="char" data-char="goose">Goose</span> swallows the Tesseract. Later returns to <span class="char" data-char="shield">S.H.I.E.L.D.</span>.</div>
+          </div>
+          <div class="timeline-node space">
+            <div class="timeline-header"><span class="timeline-year">2012</span><span class="timeline-film">The Avengers</span></div>
+            <div class="timeline-desc"><span class="char" data-char="loki">Loki</span> steals it and opens a wormhole over <span class="char" data-char="nyc">New York</span> for the <span class="char" data-char="chitauri">Chitauri</span>. <span class="char" data-char="thor">Thor</span> returns it to <span class="char" data-char="asgard">Asgard</span>.</div>
+          </div>
+          <div class="timeline-node space">
+            <div class="timeline-header"><span class="timeline-year">2017</span><span class="timeline-film">Thor: Ragnarok</span></div>
+            <div class="timeline-desc"><span class="char" data-char="loki">Loki</span> grabs it from the vault during Asgard's destruction and escapes on the <span class="char" data-char="statesman">Statesman</span>.</div>
+          </div>
+          <div class="timeline-node space">
+            <div class="timeline-header"><span class="timeline-year">2018</span><span class="timeline-film">Avengers: Infinity War</span></div>
+            <div class="timeline-desc"><span class="char" data-char="thanos">Thanos</span> takes it from <span class="char" data-char="loki">Loki</span> on the Statesman, crushes the cube, and adds the Space Stone to the <span class="char" data-char="gauntlet">Gauntlet</span>.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MIND STONE -->
+      <div class="stone-card">
+        <div class="stone-card-header">
+          <div class="stone-image stone-icon" style="background:linear-gradient(135deg,#3d3505,#eab308);"><svg viewBox="0 0 72 72" width="60" height="60"><ellipse cx="36" cy="36" rx="16" ry="20" fill="#facc15"/><rect x="34" y="52" width="4" height="8" fill="#a16207" rx="1"/></svg></div>
+          <div>
+            <div class="stone-title">Mind Stone</div>
+            <div class="stone-alias">Loki's Scepter → Vision</div>
+          </div>
+          <div class="stone-color" style="background:#eab308"></div>
+        </div>
+        <div class="stone-journey stone-timeline" style="color:#eab308">
+          <div class="timeline-node mind">
+            <div class="timeline-header"><span class="timeline-year">2012</span><span class="timeline-film">The Avengers</span></div>
+            <div class="timeline-desc"><span class="char" data-char="thanos">Thanos</span> gives <span class="char" data-char="loki">Loki</span> the scepter. <span class="char" data-char="loki">Loki</span> uses it to control <span class="char" data-char="hawkeye">Hawkeye</span>, <span class="char" data-char="selvig">Selvig</span>. Scepter goes to <span class="char" data-char="shield">S.H.I.E.L.D.</span>.</div>
+          </div>
+          <div class="timeline-node mind">
+            <div class="timeline-header"><span class="timeline-year">2015</span><span class="timeline-film">Age of Ultron (Prelude)</span></div>
+            <div class="timeline-desc"><span class="char" data-char="strucker">Strucker</span>/<span class="char" data-char="hydra">HYDRA</span> steal it, create <span class="char" data-char="wanda">Wanda</span> & <span class="char" data-char="quicksilver">Pietro</span> in <span class="char" data-char="sokovia">Sokovia</span>.</div>
+          </div>
+          <div class="timeline-node mind">
+            <div class="timeline-header"><span class="timeline-year">2015</span><span class="timeline-film">Age of Ultron</span></div>
+            <div class="timeline-desc"><span class="char" data-char="ultron">Ultron</span> steals it, creates synthetic body. <span class="char" data-char="vision">Vision</span> is born with the stone in his forehead.</div>
+          </div>
+          <div class="timeline-node mind">
+            <div class="timeline-header"><span class="timeline-year">2018</span><span class="timeline-film">Infinity War</span></div>
+            <div class="timeline-desc"><span class="char" data-char="wanda">Wanda</span> destroys the stone (killing <span class="char" data-char="vision">Vision</span>). <span class="char" data-char="thanos">Thanos</span> reverses time and takes it.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REALITY STONE -->
+      <div class="stone-card">
+        <div class="stone-card-header">
+          <div class="stone-image stone-icon" style="background:linear-gradient(135deg,#5c1a1a,#dc2626);"><svg viewBox="0 0 72 72" width="60" height="60"><ellipse cx="36" cy="36" rx="20" ry="18" fill="#dc2626"/></svg></div>
+          <div>
+            <div class="stone-title">Reality Stone</div>
+            <div class="stone-alias">The Aether</div>
+          </div>
+          <div class="stone-color" style="background:#dc2626"></div>
+        </div>
+        <div class="stone-journey stone-timeline" style="color:#dc2626">
+          <div class="timeline-node reality">
+            <div class="timeline-header"><span class="timeline-year">Ancient</span><span class="timeline-film">Thor: The Dark World</span></div>
+            <div class="timeline-desc"><span class="char" data-char="malekith">Malekith</span> & <span class="char" data-char="darkelves">Dark Elves</span> tried to use it. <span class="char" data-char="bor">Bor</span> hid it. During <span class="char" data-char="convergence">Convergence</span>, <span class="char" data-char="jane">Jane</span> bonds with it. <span class="char" data-char="malekith">Malekith</span> extracts it, <span class="char" data-char="thor">Thor</span> defeats him. Given to <span class="char" data-char="collector">Collector</span> on <span class="char" data-char="knowhere">Knowhere</span>.</div>
+          </div>
+          <div class="timeline-node reality">
+            <div class="timeline-header"><span class="timeline-year">2013</span><span class="timeline-film">(continued)</span></div>
+            <div class="timeline-desc"><span class="char" data-char="malekith">Malekith</span> kills <span class="char" data-char="frigga">Frigga</span>, attacks <span class="char" data-char="asgard">Asgard</span>. <span class="char" data-char="loki">Loki</span> tricks him. <span class="char" data-char="odin">Odin</span> sends Aether away.</div>
+          </div>
+          <div class="timeline-node reality">
+            <div class="timeline-header"><span class="timeline-year">2018</span><span class="timeline-film">Infinity War</span></div>
+            <div class="timeline-desc"><span class="char" data-char="thanos">Thanos</span> attacks <span class="char" data-char="knowhere">Knowhere</span>, extracts Aether from <span class="char" data-char="collector">Collector</span>, takes Reality Stone.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- POWER STONE -->
+      <div class="stone-card">
+        <div class="stone-card-header">
+          <div class="stone-image stone-icon" style="background:linear-gradient(135deg,#3d1a5c,#9333ea);"><svg viewBox="0 0 72 72" width="60" height="60"><circle cx="36" cy="36" r="22" fill="#9333ea"/><circle cx="36" cy="32" r="10" fill="rgba(255,255,255,0.25)"/></svg></div>
+          <div>
+            <div class="stone-title">Power Stone</div>
+            <div class="stone-alias">The Orb</div>
+          </div>
+          <div class="stone-color" style="background:#9333ea"></div>
+        </div>
+        <div class="stone-journey stone-timeline" style="color:#9333ea">
+          <div class="timeline-node power">
+            <div class="timeline-header"><span class="timeline-year">2014</span><span class="timeline-film">Guardians of the Galaxy</span></div>
+            <div class="timeline-desc">Hidden on <span class="char" data-char="morag">Morag</span>. <span class="char" data-char="quill">Quill</span> steals it before <span class="char" data-char="ronan">Ronan</span>. <span class="char" data-char="collector">Collector</span>'s servant <span class="char" data-char="carina">Carina</span> vaporized touching it. <span class="char" data-char="gotg">Guardians</span> defeat <span class="char" data-char="ronan">Ronan</span>, give to <span class="char" data-char="novacorps">Nova Corps</span> on <span class="char" data-char="xandar">Xandar</span>.</div>
+          </div>
+          <div class="timeline-node power">
+            <div class="timeline-header"><span class="timeline-year">2018</span><span class="timeline-film">Infinity War (off-screen)</span></div>
+            <div class="timeline-desc"><span class="char" data-char="thanos">Thanos</span> attacks <span class="char" data-char="xandar">Xandar</span>, claims Power Stone—first of six.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIME STONE -->
+      <div class="stone-card">
+        <div class="stone-card-header">
+          <div class="stone-image stone-icon" style="background:linear-gradient(135deg,#0a3d1a,#22c55e);"><svg viewBox="0 0 72 72" width="60" height="60"><circle cx="36" cy="36" r="18" fill="none" stroke="#4ade80" stroke-width="3"/><ellipse cx="36" cy="36" rx="12" ry="14" fill="#16a34a"/><path d="M36 22 L36 36 L44 40" stroke="#4ade80" stroke-width="2" fill="none"/></svg></div>
+          <div>
+            <div class="stone-title">Time Stone</div>
+            <div class="stone-alias">Eye of Agamotto</div>
+          </div>
+          <div class="stone-color" style="background:#22c55e"></div>
+        </div>
+        <div class="stone-journey stone-timeline" style="color:#22c55e">
+          <div class="timeline-node time">
+            <div class="timeline-header"><span class="timeline-year">2016</span><span class="timeline-film">Doctor Strange</span></div>
+            <div class="timeline-desc">Created by <span class="char" data-char="agamotto">Agamotto</span>. Kept at <span class="char" data-char="kamartaj">Kamar-Taj</span>. <span class="char" data-char="strange">Strange</span> uses it vs <span class="char" data-char="dormammu">Dormammu</span>, becomes Sorcerer Supreme.</div>
+          </div>
+          <div class="timeline-node time">
+            <div class="timeline-header"><span class="timeline-year">2018</span><span class="timeline-film">Infinity War</span></div>
+            <div class="timeline-desc">On <span class="char" data-char="titan">Titan</span>, <span class="char" data-char="strange">Strange</span> views 14M futures, gives stone to <span class="char" data-char="thanos">Thanos</span> to save <span class="char" data-char="tony">Tony</span> (the winning path).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOUL STONE -->
+      <div class="stone-card">
+        <div class="stone-card-header">
+          <div class="stone-image stone-icon" style="background:linear-gradient(135deg,#5c3005,#f97316);"><svg viewBox="0 0 72 72" width="60" height="60"><path d="M36 14 C36 14 20 28 20 40 C20 50 28 58 36 58 C44 58 52 50 52 40 C52 28 36 14 36 14 Z" fill="#f97316"/><ellipse cx="36" cy="38" rx="8" ry="10" fill="rgba(255,255,255,0.2)"/></svg></div>
+          <div>
+            <div class="stone-title">Soul Stone</div>
+            <div class="stone-alias">Vormir</div>
+          </div>
+          <div class="stone-color" style="background:#f97316"></div>
+        </div>
+        <div class="stone-journey stone-timeline" style="color:#f97316">
+          <div class="timeline-node soul">
+            <div class="timeline-header"><span class="timeline-year">1942</span><span class="timeline-film">CA: First Avenger</span></div>
+            <div class="timeline-desc"><span class="char" data-char="redskull">Red Skull</span> touched Tesseract → banished to <span class="char" data-char="vormir">Vormir</span>. Becomes <span class="char" data-char="stonekeeper">Stonekeeper</span>—cannot claim stone (incapable of love).</div>
+          </div>
+          <div class="timeline-node soul">
+            <div class="timeline-header"><span class="timeline-year">2018</span><span class="timeline-film">Infinity War</span></div>
+            <div class="timeline-desc"><span class="char" data-char="gamora">Gamora</span> knew the location. <span class="char" data-char="thanos">Thanos</span> tortures <span class="char" data-char="nebula">Nebula</span>; <span class="char" data-char="gamora">Gamora</span> reveals it. Sacrifice required: someone you love. <span class="char" data-char="thanos">Thanos</span> sacrifices <span class="char" data-char="gamora">Gamora</span> → receives Soul Stone.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-section">
+      <h2>⏱ MCU CHRONOLOGICAL TIMELINE</h2>
+      <div class="timeline">
+        <span class="timeline-chip"><span class="year">1942</span> CA: First Avenger</span>
+        <span class="timeline-chip"><span class="year">1995</span> Captain Marvel</span>
+        <span class="timeline-chip"><span class="year">2010</span> Iron Man</span>
+        <span class="timeline-chip"><span class="year">2011</span> Iron Man 2, Hulk, Thor</span>
+        <span class="timeline-chip"><span class="year">2012</span> Avengers, IM3</span>
+        <span class="timeline-chip"><span class="year">2013</span> Thor: Dark World</span>
+        <span class="timeline-chip"><span class="year">2014</span> Winter Soldier, GotG</span>
+        <span class="timeline-chip"><span class="year">2015</span> Age of Ultron, Ant-Man</span>
+        <span class="timeline-chip"><span class="year">2016</span> Civil War, Doctor Strange</span>
+        <span class="timeline-chip"><span class="year">2017</span> Ragnarok, Black Panther</span>
+        <span class="timeline-chip"><span class="year">2018</span> Infinity War, Endgame</span>
+      </div>
+    </div>
+
+    <p class="footnote">
+      Images from <a href="https://marvel.fandom.com" target="_blank" rel="noopener">Marvel Fandom</a> &
+      <a href="https://marvelcinematicuniverse.fandom.com" target="_blank" rel="noopener">MCU Wiki</a>.
+      If images don't load, try opening via a local server: <code>python -m http.server</code> then visit <code>localhost:8000</code>.
+    </p>
+  </div>
+
+  <!-- Character tooltip (populated by JS) -->
+  <div id="char-tooltip" class="char-tooltip">
+    <img id="char-tooltip-img" src="" alt="" referrerpolicy="no-referrer">
+    <div id="char-tooltip-name" class="char-name"></div>
+  </div>
+
+  <script>
+  function makeFallbackSvg(name, bg) {
+    const initials = (name.match(/\b\w/g) || ['?']).slice(0,2).join('').toUpperCase();
+    const bgColor = bg || '00d4ff';
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="250" viewBox="0 0 200 250"><rect width="200" height="250" fill="#1e293b"/><circle cx="100" cy="95" r="55" fill="#' + bgColor + '" opacity="0.9"/><text x="100" y="105" font-size="56" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-family="Arial,sans-serif" font-weight="bold">' + initials + '</text></svg>';
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
+  }
+  const W = 'https://static.wikia.nocookie.net/marvelcinematicuniverse/images';
+  const CHARACTERS = {
+    thanos: { name: 'Thanos', img: W+'/2/27/Thanos_Infobox.png/revision/latest/scale-to-width-down/250', bg: '6b21a8' },
+    loki: { name: 'Loki', img: W+'/b/b5/Loki_Infobox.png/revision/latest/scale-to-width-down/250', bg: '065f46' },
+    thor: { name: 'Thor', img: W+'/2/22/Thor_in_LoveAndThunder_Poster.jpg/revision/latest/scale-to-width-down/250', bg: '1e3a8a' },
+    redskull: { name: 'Red Skull', img: W+'/6/6d/Red_Skull_Infobox.png/revision/latest/scale-to-width-down/250', bg: '991b1b' },
+    cap: { name: 'Steve Rogers', img: W+'/b/b7/Steve_Rogers_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '1e40af' },
+    tony: { name: 'Tony Stark', img: W+'/9/9d/Iron_Man_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '0f172a' },
+    carol: { name: 'Carol Danvers', img: W+'/3/3d/Captain_Marvel_Profile.png/revision/latest/scale-to-width-down/250', bg: 'ea580c' },
+    marvell: { name: 'Mar-Vell', img: W+'/c/c7/Mar-Vell-Textless_Poster.jpg/revision/latest/scale-to-width-down/250', bg: '4c1d95' },
+    nickfury: { name: 'Nick Fury', img: W+'/e/e4/Nick_Fury_Profile.png/revision/latest/scale-to-width-down/250', bg: '0f172a' },
+    howardstark: { name: 'Howard Stark', img: W+'/f/f6/Howard_Stark_Infobox.png/revision/latest/scale-to-width-down/250', bg: '1e3a8a' },
+    strange: { name: 'Doctor Strange', img: W+'/b/b2/Doctor_Strange_MoM_Profile.jpeg/revision/latest/scale-to-width-down/250', bg: '14532d' },
+    vision: { name: 'Vision', img: W+'/6/6e/Vision_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '7c3aed' },
+    wanda: { name: 'Wanda Maximoff', img: W+'/6/60/Scarlet_Witch_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '7f1d1d' },
+    gamora: { name: 'Gamora', img: W+'/7/70/Gamora_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '166534' },
+    nebula: { name: 'Nebula', img: W+'/3/37/Nebula_Vol._3.jpg/revision/latest/scale-to-width-down/250', bg: '4c1d95' },
+    quill: { name: 'Peter Quill', img: W+'/6/6c/Star-Lord_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '1e3a8a' },
+    jane: { name: 'Jane Foster', img: W+'/d/db/Mighty_Thor_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '1e40af' },
+    malekith: { name: 'Malekith', img: W+'/b/b1/Malekith-TextlessPoster1.jpg/revision/latest/scale-to-width-down/250', bg: '1e1b4b' },
+    odin: { name: 'Odin', img: W+'/0/02/Odin_Infobox.png/revision/latest/scale-to-width-down/250', bg: '1e3a8a' },
+    hulk: { name: 'Bruce Banner', img: W+'/7/79/Hulk_in_the_She-Hulk_series_-_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '166534' },
+    banner: { name: 'Bruce Banner', img: W+'/7/79/Hulk_in_the_She-Hulk_series_-_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '166534' },
+    hawkeye: { name: 'Clint Barton', img: W+'/5/5b/Hawkeye_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '1e293b' },
+    selvig: { name: 'Erik Selvig', img: W+'/f/fc/Erik_Selvig_-_Profile.jpg/revision/latest/scale-to-width-down/250', bg: '1e40af' },
+    ultron: { name: 'Ultron', img: W+'/6/6a/Ultron_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '1e1b4b' },
+    collector: { name: 'The Collector', img: W+'/d/df/CollectorGotgTextlessPoster.jpg/revision/latest/scale-to-width-down/250', bg: '4c1d95' },
+    ronan: { name: 'Ronan', img: W+'/0/0f/Ronan_the_Accuser_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '1e1b4b' },
+    hela: { name: 'Hela', img: W+'/4/40/Hela_Profile.png/revision/latest/scale-to-width-down/250', bg: '4c1d95' },
+    heimdall: { name: 'Heimdall', img: W+'/e/ea/Heimdall_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '1e3a8a' },
+    yondu: { name: 'Yondu', img: W+'/9/9b/Yondu_Infobox.png/revision/latest/scale-to-width-down/250', bg: '0d9488' },
+    goose: { name: 'Goose', img: W+'/1/1e/Goose_The_Marvels.png/revision/latest/scale-to-width-down/250', bg: '1e3a5f' },
+    frigga: { name: 'Frigga', img: W+'/6/65/Frigga_Profile.png/revision/latest/scale-to-width-down/250', bg: '1e3a8a' },
+    bor: { name: 'Bor', img: null, bg: '4c1d95' },
+    agamotto: { name: 'Agamotto', img: W+'/d/dc/Ancient_One.png/revision/latest/scale-to-width-down/250', bg: '14532d' },
+    dormammu: { name: 'Dormammu', img: W+'/8/80/Dormammu.png/revision/latest/scale-to-width-down/250', bg: '7f1d1d' },
+    jarvis: { name: 'J.A.R.V.I.S.', img: W+'/6/6e/Vision_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '7c3aed' },
+    strucker: { name: 'Baron Strucker', img: null, bg: '991b1b' },
+    quicksilver: { name: 'Pietro Maximoff', img: W+'/1/1e/Quicksilver_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '7f1d1d' },
+    zola: { name: 'Armin Zola', img: W+'/6/67/Arnim_Zola.png/revision/latest/scale-to-width-down/250', bg: '991b1b' },
+    gauntlet: { name: 'Infinity Gauntlet', img: W+'/6/61/Thanos%27_Infinity_Gauntlet_full_promo.png/revision/latest/scale-to-width-down/250', bg: '6b21a8' },
+    hydra: { name: 'HYDRA', img: null, bg: '991b1b' },
+    shield: { name: 'S.H.I.E.L.D.', img: W+'/9/9b/S.H.I.E.L.D._logo_NEW.png/revision/latest/scale-to-width-down/250', bg: '1e3a5f' },
+    gotg: { name: 'Guardians', img: W+'/6/6c/Star-Lord_Infobox.jpg/revision/latest/scale-to-width-down/250', bg: '4c1d95' },
+    tonsberg: { name: 'Tønsberg, Norway', img: null, bg: '14532d' },
+    pegasus: { name: 'Project Pegasus', img: null, bg: '1e3a5f' },
+    asgard: { name: 'Asgard', img: null, bg: '4c1d95' },
+    vormir: { name: 'Vormir', img: null, bg: 'ea580c' },
+    knowhere: { name: 'Knowhere', img: null, bg: '0d9488' },
+    xandar: { name: 'Xandar', img: null, bg: '166534' },
+    novacorps: { name: 'Nova Corps', img: null, bg: '1e3a5f' },
+    morag: { name: 'Morag', img: null, bg: '991b1b' },
+    kamartaj: { name: 'Kamar-Taj', img: null, bg: '14532d' },
+    titan: { name: 'Titan', img: null, bg: '4c1d95' },
+    wakanda: { name: 'Wakanda', img: null, bg: '166534' },
+    sokovia: { name: 'Sokovia', img: null, bg: '475569' },
+    statesman: { name: 'Statesman', img: null, bg: '0d9488' },
+    nyc: { name: 'New York', img: null, bg: '64748b' },
+    chitauri: { name: 'Chitauri', img: W+'/6/6c/Chitauri.png/revision/latest/scale-to-width-down/250', bg: '166534' },
+    darkelves: { name: 'Dark Elves', img: null, bg: '4c1d95' },
+    convergence: { name: 'Convergence', img: null, bg: '4c1d95' },
+    stonekeeper: { name: 'Stonekeeper', img: W+'/6/6d/Red_Skull_Infobox.png/revision/latest/scale-to-width-down/250', bg: '991b1b' },
+    arctic: { name: 'Arctic Ocean', img: null, bg: '0c4a6e' },
+    surtur: { name: 'Surtur', img: W+'/e/e7/Surtur_Profile.png/revision/latest/scale-to-width-down/250', bg: '991b1b' },
+    corvus: { name: 'Corvus Glaive', img: null, bg: '64748b' },
+    proxima: { name: 'Proxima Midnight', img: null, bg: '4c1d95' },
+    carina: { name: 'Carina', img: null, bg: '991b1b' },
+  };
+
+  const tooltip = document.getElementById('char-tooltip');
+  const tooltipImg = document.getElementById('char-tooltip-img');
+  const tooltipName = document.getElementById('char-tooltip-name');
+
+  document.querySelectorAll('.char').forEach(el => {
+    el.addEventListener('mouseenter', (e) => {
+      const key = el.getAttribute('data-char');
+      const char = CHARACTERS[key];
+      if (char) {
+        tooltipImg.style.display = 'block';
+        if (char.img) {
+          tooltipImg.onerror = function() {
+            this.src = makeFallbackSvg(char.name, char.bg);
+            this.onerror = null;
+          };
+          tooltipImg.src = char.img;
+        } else {
+          tooltipImg.onerror = null;
+          tooltipImg.src = makeFallbackSvg(char.name, char.bg);
+        }
+        tooltipImg.alt = char.name;
+        tooltipName.textContent = char.name;
+        tooltip.classList.add('visible');
+        positionTooltip(e, el);
+      }
+    });
+    el.addEventListener('mousemove', (e) => positionTooltip(e, el));
+    el.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
+  });
+
+  function positionTooltip(e, trigger) {
+    const rect = trigger.getBoundingClientRect();
+    const ttW = 180, ttH = 260;
+    let x = rect.left + rect.width / 2 - ttW / 2;
+    let y = rect.top - ttH - 12;
+    if (y < 10) y = rect.bottom + 12;
+    if (x < 10) x = 10;
+    if (x + ttW > window.innerWidth - 10) x = window.innerWidth - ttW - 10;
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = y + 'px';
+  }
+  </script>
+</body>
+</html>
