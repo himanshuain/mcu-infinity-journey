@@ -454,6 +454,145 @@
       font-weight: 600;
       margin-right: 6px;
     }
+    .timeline-chip .heroes-badge {
+      display: block;
+      font-size: 0.7rem;
+      color: #64748b;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+    .timeline-chip .heroes-badge .hero-pill {
+      display: inline-block;
+      background: rgba(0,212,255,0.15);
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin: 2px 3px 2px 0;
+      font-size: 0.68rem;
+      color: #94a3b8;
+    }
+
+    /* --- Timeline node heroes --- */
+    .timeline-heroes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .timeline-heroes .hero-pill {
+      display: inline-block;
+      background: rgba(0,212,255,0.12);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      color: #67e8f9;
+      border: 1px solid rgba(0,212,255,0.25);
+    }
+
+    /* --- Transformations section --- */
+    .transformations-section {
+      margin-top: 60px;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .transformations-section h2 {
+      font-family: 'Orbitron', sans-serif;
+      color: #00d4ff;
+      font-size: 1.2rem;
+      margin-bottom: 24px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .transformation-card {
+      background: linear-gradient(160deg, #1a1a2e 0%, #0f0f1a 100%);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .transformation-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,212,255,0.15);
+    }
+    .transformation-hero-header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer;
+    }
+    .transformation-hero-header:hover {
+      background: rgba(0,212,255,0.04);
+    }
+    .transformation-hero-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(0,212,255,0.4);
+    }
+    .transformation-hero-name {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      color: #00d4ff;
+      font-size: 1rem;
+    }
+    .transformation-evolutions {
+      padding: 20px 24px;
+      display: none;
+    }
+    .transformation-card.expanded .transformation-evolutions {
+      display: block;
+    }
+    .transformation-card.expanded .expand-icon {
+      transform: rotate(180deg);
+    }
+    .expand-icon {
+      margin-left: auto;
+      font-size: 1rem;
+      color: #64748b;
+      transition: transform 0.3s;
+    }
+    .evolution-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .evolution-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .evolution-badge {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .evolution-badge.suit { background: rgba(59,130,246,0.2); color: #60a5fa; }
+    .evolution-badge.power { background: rgba(234,179,8,0.2); color: #facc15; }
+    .evolution-badge.look { background: rgba(34,197,94,0.2); color: #4ade80; }
+    .evolution-content {
+      flex: 1;
+    }
+    .evolution-title {
+      font-weight: 600;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+    .evolution-movie {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+    .evolution-desc {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
 
     /* --- Scroll reveal animation --- */
     .reveal {
@@ -677,27 +816,14 @@
 
     <div class="timeline-section reveal">
       <h2>⏱ MCU CHRONOLOGICAL TIMELINE</h2>
-      <div class="timeline">
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt0458339/" target="_blank" rel="noopener"><span class="year">1942</span> CA: First Avenger</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt4154664/" target="_blank" rel="noopener"><span class="year">1995</span> Captain Marvel</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt0371746/" target="_blank" rel="noopener"><span class="year">2010</span> Iron Man</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt1228705/" target="_blank" rel="noopener"><span class="year">2011</span> Iron Man 2</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt0800080/" target="_blank" rel="noopener"><span class="year">2011</span> Hulk</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt0800369/" target="_blank" rel="noopener"><span class="year">2011</span> Thor</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt0848228/" target="_blank" rel="noopener"><span class="year">2012</span> The Avengers</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt1300854/" target="_blank" rel="noopener"><span class="year">2012</span> Iron Man 3</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt1981115/" target="_blank" rel="noopener"><span class="year">2013</span> Thor: Dark World</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt1843866/" target="_blank" rel="noopener"><span class="year">2014</span> Winter Soldier</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt2015381/" target="_blank" rel="noopener"><span class="year">2014</span> Guardians of the Galaxy</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt2395427/" target="_blank" rel="noopener"><span class="year">2015</span> Age of Ultron</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt0478970/" target="_blank" rel="noopener"><span class="year">2015</span> Ant-Man</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt3498820/" target="_blank" rel="noopener"><span class="year">2016</span> Civil War</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt1211837/" target="_blank" rel="noopener"><span class="year">2016</span> Doctor Strange</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt3501632/" target="_blank" rel="noopener"><span class="year">2017</span> Thor: Ragnarok</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt1825683/" target="_blank" rel="noopener"><span class="year">2017</span> Black Panther</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt4154756/" target="_blank" rel="noopener"><span class="year">2018</span> Infinity War</a>
-        <a class="timeline-chip" href="https://www.imdb.com/title/tt4154796/" target="_blank" rel="noopener"><span class="year">2018</span> Avengers: Endgame</a>
-      </div>
+      <p style="text-align:center;color:#64748b;font-size:0.85rem;margin-bottom:16px;">Hover to see hero characters in each film</p>
+      <div class="timeline" id="timeline-chips"></div>
+    </div>
+
+    <div class="transformations-section reveal">
+      <h2>⚡ HERO TRANSFORMATIONS</h2>
+      <p style="text-align:center;color:#64748b;font-size:0.85rem;margin-bottom:24px;">Suit upgrades, power evolutions & look changes</p>
+      <div id="transformations-container"></div>
     </div>
 
   </div>
@@ -784,6 +910,88 @@
     carina: { name: 'Carina', img: null, bg: '991b1b' },
   };
 
+  const MOVIES = {
+    'ca-first-avenger': { year: '1942', title: 'CA: First Avenger', imdb: 'tt0458339', heroes: ['Steve Rogers', 'Howard Stark', 'Peggy Carter'] },
+    'captain-marvel': { year: '1995', title: 'Captain Marvel', imdb: 'tt4154664', heroes: ['Carol Danvers', 'Nick Fury', 'Maria Rambeau'] },
+    'iron-man': { year: '2010', title: 'Iron Man', imdb: 'tt0371746', heroes: ['Tony Stark', 'Rhodey', 'Pepper'] },
+    'iron-man-2': { year: '2011', title: 'Iron Man 2', imdb: 'tt1228705', heroes: ['Tony Stark', 'Rhodey', 'Natasha', 'Nick Fury'] },
+    'hulk': { year: '2011', title: 'Hulk', imdb: 'tt0800080', heroes: ['Bruce Banner', 'Betty Ross'] },
+    'thor': { year: '2011', title: 'Thor', imdb: 'tt0800369', heroes: ['Thor', 'Jane', 'Loki', 'Hawkeye'] },
+    'avengers': { year: '2012', title: 'The Avengers', imdb: 'tt0848228', heroes: ['Iron Man', 'Captain America', 'Thor', 'Hulk', 'Black Widow', 'Hawkeye', 'Loki'] },
+    'iron-man-3': { year: '2012', title: 'Iron Man 3', imdb: 'tt1300854', heroes: ['Tony Stark', 'Rhodey', 'Pepper'] },
+    'thor-dark-world': { year: '2013', title: 'Thor: Dark World', imdb: 'tt1981115', heroes: ['Thor', 'Loki', 'Jane'] },
+    'winter-soldier': { year: '2014', title: 'Winter Soldier', imdb: 'tt1843866', heroes: ['Captain America', 'Black Widow', 'Falcon', 'Nick Fury'] },
+    'gotg': { year: '2014', title: 'Guardians of the Galaxy', imdb: 'tt2015381', heroes: ['Star-Lord', 'Gamora', 'Drax', 'Rocket', 'Groot'] },
+    'age-of-ultron': { year: '2015', title: 'Age of Ultron', imdb: 'tt2395427', heroes: ['Avengers', 'Wanda', 'Vision', 'Quicksilver'] },
+    'ant-man': { year: '2015', title: 'Ant-Man', imdb: 'tt0478970', heroes: ['Scott Lang', 'Hank Pym', 'Hope van Dyne'] },
+    'civil-war': { year: '2016', title: 'Civil War', imdb: 'tt3498820', heroes: ['Captain America', 'Iron Man', 'Black Widow', 'Black Panther', 'Spider-Man', 'Ant-Man', 'Vision', 'Wanda'] },
+    'doctor-strange': { year: '2016', title: 'Doctor Strange', imdb: 'tt1211837', heroes: ['Doctor Strange', 'Wong', 'Ancient One'] },
+    'thor-ragnarok': { year: '2017', title: 'Thor: Ragnarok', imdb: 'tt3501632', heroes: ['Thor', 'Hulk', 'Loki', 'Valkyrie'] },
+    'black-panther': { year: '2017', title: 'Black Panther', imdb: 'tt1825683', heroes: ['Black Panther', 'Shuri', 'Okoye', 'Killmonger'] },
+    'infinity-war': { year: '2018', title: 'Infinity War', imdb: 'tt4154756', heroes: ['Avengers', 'Guardians', 'Doctor Strange', 'Black Panther', 'Spider-Man'] },
+    'endgame': { year: '2018', title: 'Avengers: Endgame', imdb: 'tt4154796', heroes: ['All Avengers', 'Captain Marvel', 'Nebula', 'Rocket', 'Ant-Man'] },
+  };
+
+  const TRANSFORMATIONS = [
+    { char: 'tony', name: 'Tony Stark / Iron Man', img: CHARACTERS.tony.img,
+      evolutions: [
+        { type: 'suit', title: 'Mark I (Cave Suit)', movie: 'Iron Man', desc: 'Bulky armor built in captivity. Arc reactor power, basic flight, flamethrowers.' },
+        { type: 'suit', title: 'Mark II–VII', movie: 'Iron Man & Iron Man 2', desc: 'Sleeker designs, repulsors, J.A.R.V.I.S. integration. War Machine debut.' },
+        { type: 'suit', title: 'Mark 42 (Prehensile)', movie: 'Iron Man 3', desc: 'Modular, remotely deployable suit. Can fly to Tony piece by piece.' },
+        { type: 'suit', title: 'Mark 50 (Nanotech)', movie: 'Infinity War', desc: 'Nanomachines form suit instantly from chest. Flight, shields, weapons on demand.' },
+        { type: 'suit', title: 'Mark 85 (Final)', movie: 'Endgame', desc: 'Final nanotech suit. Wields stones briefly for the Snap. Sacrifice.' },
+      ]},
+    { char: 'cap', name: 'Steve Rogers / Captain America', img: CHARACTERS.cap.img,
+      evolutions: [
+        { type: 'suit', title: 'WWII Uniform', movie: 'CA: First Avenger', desc: 'Stars & stripes. Shield. Super-soldier strength. Iconic look.' },
+        { type: 'suit', title: 'Stealth Suit', movie: 'Winter Soldier', desc: 'Dark tactical suit for covert ops. No star. Magnetic shield.' },
+        { type: 'suit', title: 'Civil War Suit', movie: 'Civil War', desc: 'Red & blue return. Closer to classic comic look.' },
+        { type: 'look', title: 'Endgame (Aged)', movie: 'Endgame', desc: 'Returns from past timeline aged. Passes shield to Sam.' },
+      ]},
+    { char: 'thor', name: 'Thor', img: CHARACTERS.thor.img,
+      evolutions: [
+        { type: 'look', title: 'Classic Thor', movie: 'Thor–Age of Ultron', desc: 'Long hair, red cape, Mjölnir. Prince of Asgard.' },
+        { type: 'look', title: 'Ragnarok Short Hair', movie: 'Thor: Ragnarok', desc: 'Hair cut, eyepatch. Loses Mjölnir. Discovers lightning without hammer.' },
+        { type: 'power', title: 'Stormbreaker', movie: 'Infinity War', desc: 'New weapon from Eitri. Channels lightning. Can summon Bifröst.' },
+        { type: 'look', title: 'Fat Thor → Worthy', movie: 'Endgame', desc: 'Depression weight, then restores himself. Worthy of Mjölnir again.' },
+      ]},
+    { char: 'hulk', name: 'Bruce Banner / Hulk', img: CHARACTERS.hulk.img,
+      evolutions: [
+        { type: 'power', title: 'Hulk Rage', movie: 'Hulk–Age of Ultron', desc: 'Transforms when angry. Strength scales with anger.' },
+        { type: 'power', title: 'Professor Hulk', movie: 'Endgame', desc: 'Banner\'s mind, Hulk\'s body. Smart, controlled. Wears the Gauntlet.' },
+      ]},
+    { char: 'strange', name: 'Doctor Strange', img: CHARACTERS.strange.img,
+      evolutions: [
+        { type: 'power', title: 'Sorcerer Supreme', movie: 'Doctor Strange', desc: 'Eye of Agamotto, sling rings, mystic arts. Battles Dormammu.' },
+        { type: 'power', title: '14M Futures', movie: 'Infinity War', desc: 'Uses Time Stone to find winning path. Surrenders stone for Tony.' },
+      ]},
+    { char: 'wanda', name: 'Wanda Maximoff / Scarlet Witch', img: CHARACTERS.wanda.img,
+      evolutions: [
+        { type: 'power', title: 'Mind Stone Powers', movie: 'Age of Ultron', desc: 'Telekinesis, mind manipulation. Created by scepter.' },
+        { type: 'power', title: 'Chaos Magic', movie: 'Infinity War & WandaVision', desc: 'Destroys Mind Stone. Holds back Thanos. Chaos magic revealed.' },
+      ]},
+    { char: 'vision', name: 'Vision', img: CHARACTERS.vision.img,
+      evolutions: [
+        { type: 'power', title: 'Birth (Mind Stone)', movie: 'Age of Ultron', desc: 'Synthetic body + Mind Stone + J.A.R.V.I.S. Density control, phasing.' },
+        { type: 'look', title: 'Civil War Cape', movie: 'Civil War', desc: 'Cape and more human demeanor. Romantic with Wanda.' },
+      ]},
+    { char: 'quill', name: 'Peter Quill / Star-Lord', img: CHARACTERS.quill.img,
+      evolutions: [
+        { type: 'suit', title: 'Ravager Gear', movie: 'Guardians 1–2', desc: 'Mask, element guns, jet boots. Celestial DNA (hidden).' },
+        { type: 'power', title: 'Celestial Powers (Brief)', movie: 'Vol. 2', desc: 'Taps Ego\'s power. Light. Loses it when Ego dies.' },
+      ]},
+    { char: 'jane', name: 'Jane Foster / Mighty Thor', img: CHARACTERS.jane.img,
+      evolutions: [
+        { type: 'look', title: 'Scientist', movie: 'Thor & Dark World', desc: 'Astrophysicist. Bonded with Aether briefly.' },
+        { type: 'power', title: 'Mighty Thor', movie: 'Love and Thunder', desc: 'Wields reforged Mjölnir. Transforms when worthy. Heroic sacrifice.' },
+      ]},
+    { char: 'carol', name: 'Carol Danvers / Captain Marvel', img: CHARACTERS.carol.img,
+      evolutions: [
+        { type: 'power', title: 'Binary Form', movie: 'Captain Marvel', desc: 'Tesseract-energy infused. Flight, photon blasts, binary glow.' },
+        { type: 'power', title: 'Full Power', movie: 'Endgame', desc: 'Destroys Thanos\' ship. Among strongest heroes.' },
+      ]},
+  ];
+
   const tooltip = document.getElementById('char-tooltip');
   const tooltipImg = document.getElementById('char-tooltip-img');
   const tooltipName = document.getElementById('char-tooltip-name');
@@ -835,6 +1043,76 @@
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // --- Render timeline chips with heroes ---
+  const chipOrder = ['ca-first-avenger','captain-marvel','iron-man','iron-man-2','hulk','thor','avengers','iron-man-3','thor-dark-world','winter-soldier','gotg','age-of-ultron','ant-man','civil-war','doctor-strange','thor-ragnarok','black-panther','infinity-war','endgame'];
+  const timelineEl = document.getElementById('timeline-chips');
+  chipOrder.forEach(key => {
+    const m = MOVIES[key];
+    if (!m) return;
+    const heroesHtml = m.heroes.map(h => `<span class="hero-pill">${h}</span>`).join('');
+    const a = document.createElement('a');
+    a.className = 'timeline-chip';
+    a.href = `https://www.imdb.com/title/${m.imdb}/`;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML = `<span class="year">${m.year}</span> ${m.title}<span class="heroes-badge">${heroesHtml}</span>`;
+    timelineEl.appendChild(a);
+  });
+
+  // --- Render transformations ---
+  const transContainer = document.getElementById('transformations-container');
+  TRANSFORMATIONS.forEach(t => {
+    const card = document.createElement('div');
+    card.className = 'transformation-card reveal';
+    const evoHtml = t.evolutions.map(e => `
+      <div class="evolution-item">
+        <span class="evolution-badge ${e.type}">${e.type}</span>
+        <div class="evolution-content">
+          <div class="evolution-title">${e.title}</div>
+          <div class="evolution-movie">${e.movie}</div>
+          <div class="evolution-desc">${e.desc}</div>
+        </div>
+      </div>
+    `).join('');
+    const imgSrc = t.img || makeFallbackSvg(t.name, '1e40af');
+    const safeName = t.name.replace(/'/g, "\\'");
+    card.innerHTML = `
+      <div class="transformation-hero-header">
+        <img class="transformation-hero-avatar" src="${imgSrc}" alt="${t.name}" onerror="this.src=makeFallbackSvg('${safeName}','1e40af');this.onerror=null">
+        <span class="transformation-hero-name">${t.name}</span>
+        <span class="expand-icon">▼</span>
+      </div>
+      <div class="transformation-evolutions">${evoHtml}</div>
+    `;
+    card.querySelector('.transformation-hero-header').addEventListener('click', () => card.classList.toggle('expanded'));
+    transContainer.appendChild(card);
+    revealObserver.observe(card);
+  });
+  transContainer.querySelector('.transformation-card')?.classList.add('expanded');
+
+  // --- Add heroes to stone-card timeline nodes ---
+  const FILM_TO_KEY = {
+    'Captain America: The First Avenger': 'ca-first-avenger', 'CA: First Avenger': 'ca-first-avenger',
+    'Captain Marvel': 'captain-marvel', 'The Avengers': 'avengers',
+    'Thor: Ragnarok': 'thor-ragnarok', 'Avengers: Infinity War': 'infinity-war', 'Infinity War': 'infinity-war',
+    'Age of Ultron (Prelude)': 'age-of-ultron', 'Age of Ultron': 'age-of-ultron',
+    'Thor: The Dark World': 'thor-dark-world', '(continued)': 'thor-dark-world',
+    'Guardians of the Galaxy': 'gotg', 'Infinity War (off-screen)': 'infinity-war',
+    'Doctor Strange': 'doctor-strange',
+  };
+  document.querySelectorAll('.timeline-node').forEach(node => {
+    const filmEl = node.querySelector('.timeline-film');
+    if (!filmEl) return;
+    const filmText = filmEl.textContent.trim();
+    const key = FILM_TO_KEY[filmText];
+    if (!key || !MOVIES[key]) return;
+    const heroes = MOVIES[key].heroes;
+    const heroesDiv = document.createElement('div');
+    heroesDiv.className = 'timeline-heroes';
+    heroesDiv.innerHTML = heroes.map(h => `<span class="hero-pill">${h}</span>`).join('');
+    node.appendChild(heroesDiv);
+  });
   </script>
 </body>
 </html>
